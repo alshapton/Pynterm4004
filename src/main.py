@@ -75,7 +75,7 @@ def read_program(program_name: str):
             if (not line) or (line == '') or len(line) == 0:
                 # Completed reading program into memory
                 break
-            programcodearray.append(line)
+            programcodearray.append(line.rstrip())
             programcode = programcode + line
         # Completed reading program into memory (or errored-out)
         program.close()
@@ -120,6 +120,11 @@ class MCS4:
         self.runprogram.add_key_command(cui.keys.KEY_ENTER,
                                         self.set_title_from_menu)
 
+        self.registers = \
+            self.master.add_block_label('Registers\n Accumulator = 0', 0, 2, row_span=2, 
+                                        column_span=2, padx =1, pady=0)
+
+
         # add help text for program statusbar
         self.program.set_help_text("Arrow keys to navigate, ESC to exit")
         self.runprogram.set_help_text("ENTER to run next line, ESC to exit")
@@ -132,7 +137,8 @@ class MCS4:
 
     # Function that sets the root window title
     def set_title_from_menu(self):
-        root.set_title('XX')
+        root.set_title(self.runprogram.get())
+        self.registers.set_title(self.runprogram.get())
 
 # change config path here if needed
 CONFIG_PATH = "~/.config/Pynterm4004/config.py"
