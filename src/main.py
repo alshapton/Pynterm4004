@@ -4,8 +4,10 @@ import py_cui as cui
 import sys
 import os
 from os.path import expanduser
+
+# Import Pyntel4004 functionality
 from hardware.processor import Processor
-from shared.shared import retrieve_program
+from assembler.assemble import assemble
 
 
 # some general functions to run before the TUI starts
@@ -121,9 +123,12 @@ class MCS4:
                                         self.set_title_from_menu)
 
         self.registers = \
-            self.master.add_block_label('Registers\n Accumulator = 0', 0, 2, row_span=2, 
-                                        column_span=2, padx =1, pady=0)
-
+            self.master.add_block_label('Registers\n Accumulator = 0', 0,
+                                        2, row_span=2,
+                                        column_span=2, padx=1, pady=-1,
+                                        center=False)
+        self.registers.toggle_border()
+        self.registers.set_selectable(False)
 
         # add help text for program statusbar
         self.program.set_help_text("Arrow keys to navigate, ESC to exit")
